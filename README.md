@@ -16,9 +16,11 @@
 Linux/macOS:
 
 ```bash Copy code python3 -m venv env source env/bin/activate```
+
 Windows:
 
 ```bash Copy code python -m venv env .\env\Scripts\activate```
+
 3. Встановіть залежності
 
 ```bash Copy code pip install -r requirements.txt```
