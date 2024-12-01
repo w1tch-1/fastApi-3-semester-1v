@@ -31,7 +31,7 @@ Windows:
 ```source env/bin/activate  # для Linux/macOS .\env\Scripts\activate  # для Windows```
 
 2. **Запустіть сервер через FastAPI**
-3. 
+
 Використайте uvicorn для запуску сервера:
 
 ```uvicorn main:app --reload```
