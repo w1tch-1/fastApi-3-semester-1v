@@ -29,7 +29,9 @@ Windows:
 1. **Переконайтесь, що середовище активоване**
 
 ```bash Copy code source env/bin/activate  # для Linux/macOS .\env\Scripts\activate  # для Windows```
+
 2. **Запустіть сервер через FastAPI**
+3. 
 Використайте uvicorn для запуску сервера:
 
 ```bash Copy code uvicorn main:app --reload```
