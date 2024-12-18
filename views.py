@@ -8,8 +8,8 @@ from sqlalchemy.exc import IntegrityError
 
 from db import get_db, User, Post
 
-from fastapi.responses import HTMLResponse, RedirectResponse, Response
-from fastapi import Request, Form, Depends, File, UploadFile
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import Request, Form, Depends, File
 
 
 def login_required(view):
@@ -38,7 +38,8 @@ async def index(request: Request, db: Session = Depends(get_db)):
 
 
 @app.get('/registration', response_class=HTMLResponse)
-async def register(request: Request, is_invalid_data: bool = False):
+async def register(request: Request,
+                   is_invalid_data: bool = False):
     return templates.TemplateResponse('registration.html', {'request': request, 'is_invalid_data': is_invalid_data})
 
 
@@ -98,6 +99,7 @@ async def profile(request: Request):
 async def create_post(request: Request,
                       title: str = Form(),
                       text: str = Form(),
+                      short_text: str = Form(),
                       price: str = Form(),
                       img=File(),
                       db: Session = Depends(get_db)):
@@ -107,6 +109,7 @@ async def create_post(request: Request,
 
     new_post = Post(title=title,
                     text=text,
+                    short_text=short_text,
                     image=f'/static/img/{img.filename}',
                     price=price,
                     user_id=request.session.get('user_id'))
@@ -115,3 +118,9 @@ async def create_post(request: Request,
     db.refresh(new_post)
     return RedirectResponse('/', status_code=303)
 
+
+@app.get('/post-details/{post_id}')
+@login_required
+async def post_details(request: Request, post_id: int, db: Session = Depends(get_db)):
+    current_post = db.query(Post).get(post_id)
+    return templates.TemplateResponse('post_details.html', {'request': request, 'current_post': current_post})

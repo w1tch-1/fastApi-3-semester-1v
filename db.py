@@ -36,6 +36,7 @@ class Post(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(60), nullable=False)
     text = Column(String(300), nullable=False)
+    short_text = Column(String(50), nullable=False)
     price = Column(Integer, nullable=False)
     image = Column(Text, nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'))

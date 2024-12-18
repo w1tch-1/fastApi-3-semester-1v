@@ -4,28 +4,28 @@
 <div class="container-fluid" style="height: 94vh;">
     <div class="row h-100">
         <div class="col-sm-3 col-md-2 bg-danger d-flex flex-column align-items-center justify-content-center">
+            <div class="container mt-1">
+                <div class="input-group input-group-sm w-50">
+                    <input id="searchText" type="text" class="form-control" placeholder="Search..." aria-label="Search">
+                    <button id="searchTour" class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
             <label for="customRange3" class="form-label text-white">Adjust Range</label>
             <input type="range" class="form-range w-75" min="0" max="5" step="0.5" id="customRange3">
         </div>
         <div class="col bg-light overflow-auto">
             <div class="container">
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    <div class="container mt-5">
-                        <form>
-                            <div class="input-group input-group-sm w-50">
-                                <input id="searchText" type="text" class="form-control" placeholder="Search..." aria-label="Search">
-                                <button id="searchTour" class="btn btn-primary" type="submit">Search</button>
-                            </div>
-                        </form>
-                    </div>
                     {% for i in post %}
-                        <div class="col">
+                        <div class="col" id="search">
                             <div class="card h-100 shadow-sm">
-                                <img src="{{ i.image }}" class="card-img-top" alt="Post Image" style="height: 150px; object-fit: cover;">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ i.title }}</h5>
-                                    <p class="card-text">{{ i.text }}</p>
-                                    <p class="text-primary fw-bold">{{ i.price }}</p>
+                                    <a href="/post-details/{{ i.id }}">
+                                        <img src="{{ i.image }}" class="card-img-top" alt="Post Image" style="height: 150px; object-fit: cover;">
+                                        <h5 class="card-title">{{ i.title }}</h5>
+                                        <p class="card-text">{{ i.short_text }}</p>
+                                        <p class="text-primary fw-bold">{{ i.price }}</p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -35,4 +35,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/search.js"></script>
 {% endblock %}

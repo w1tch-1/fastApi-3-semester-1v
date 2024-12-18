@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<img src="{{ current_post.image }}" class="card-img-top" alt="Post Image" style="width: 100px; height: 100px; object-fit: cover;">
+<h5 class="card-title">{{ current_post.title }}</h5>
+<p class="card-text">{{ current_post.text }}</p>
+<p class="text-primary fw-bold">{{ current_post.price }}</p>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#buyModal">
+  Take Tour
+</button>
+
+<div class="modal fade" id="buyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="buyModalLabel">Card Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card bg-primary text-white rounded-3">
+          <div class="card-body">
+            <p class="small mb-2">Card Type</p>
+            <div class="d-flex">
+              <i class="fab fa-cc-mastercard fa-2x me-3 text-white"></i>
+              <i class="fab fa-cc-visa fa-2x me-3 text-white"></i>
+              <i class="fab fa-cc-amex fa-2x me-3 text-white"></i>
+              <i class="fab fa-cc-paypal fa-2x text-white"></i>
+            </div>
+
+            <form class="mt-4">
+              <div class="form-outline form-white mb-4">
+                <input type="text" id="typeName" class="form-control form-control-lg" placeholder="Cardholder's Name" required />
+                <label class="form-label" for="typeName">Cardholder's Name</label>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <input type="text" id="typeText" class="form-control form-control-lg" placeholder="1234 5678 9012 3457" maxlength="19" required />
+                <label class="form-label" for="typeText">Card Number</label>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <div class="form-outline form-white">
+                    <input type="text" id="typeExp" class="form-control form-control-lg" placeholder="MM/YYYY" maxlength="7" required />
+                    <label class="form-label" for="typeExp">Expiration</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-outline form-white">
+                    <input type="password" id="cvv" class="form-control form-control-lg" placeholder="CVV" maxlength="3" required />
+                    <label class="form-label" for="cvv">CVV</label>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <hr class="my-4">
+
+            <div class="d-flex justify-content-between mb-4">
+              <p class="mb-2">Total (Incl. Taxes)</p>
+              <p class="mb-2">{{ current_post.price }}</p>
+            </div>
+
+            <div class="d-flex gap-3">
+              <button type="button" class="btn btn-info btn-lg flex-grow-1">
+                Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i>
+              </button>
+              <button type="button" class="btn btn-secondary btn-lg flex-grow-1" data-bs-dismiss="modal">
+                Cancel <i class="fas fa-long-arrow-alt-left ms-2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
