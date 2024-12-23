@@ -44,8 +44,7 @@ async def register(request: Request,
 
 
 @app.post('/registration')
-async def register(request: Request,
-                   username: str = Form(),
+async def register(username: str = Form(),
                    password: str = Form(),
                    email: str = Form(),
                    db: Session = Depends(get_db)
@@ -124,3 +123,9 @@ async def create_post(request: Request,
 async def post_details(request: Request, post_id: int, db: Session = Depends(get_db)):
     current_post = db.query(Post).get(post_id)
     return templates.TemplateResponse('post_details.html', {'request': request, 'current_post': current_post})
+
+
+@app.post('/search')
+async def search(search: str = Form(), db: Session = Depends(get_db)):
+    search_post = db.query(Post).filter(Post.title.like(f"%{search}%")).all()
+    return {'result': search_post}

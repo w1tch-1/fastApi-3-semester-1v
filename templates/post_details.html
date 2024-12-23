@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<link rel="stylesheet" href="/static/css/style.css">
 
-<img src="{{ current_post.image }}" class="card-img-top" alt="Post Image" style="width: 100px; height: 100px; object-fit: cover;">
-<h5 class="card-title">{{ current_post.title }}</h5>
-<p class="card-text">{{ current_post.text }}</p>
-<p class="text-primary fw-bold">{{ current_post.price }}</p>
+<div class="post-container">
+    <img src="{{ current_post.image }}" class="card-img-top" alt="Post Image">
+    <h5 class="card-title">{{ current_post.title }}</h5>
+    <p class="card-text">{{ current_post.text }}</p>
+    <p class="text-primary">{{ current_post.price }}</p>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#buyModal">
-  Take Tour
-</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#buyModal">
+        Take Tour
+    </button>
+</div>
 
 <div class="modal fade" id="buyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
   <div class="modal-dialog">
