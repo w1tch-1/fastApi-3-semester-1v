@@ -5,13 +5,44 @@
 
 <div class="post-container">
     <img src="{{ current_post.image }}" class="card-img-top" alt="Post Image">
-    <h5 class="card-title">{{ current_post.title }}</h5>
-    <p class="card-text">{{ current_post.text }}</p>
-    <p class="text-primary">{{ current_post.price }}</p>
+    <h5 id="tour-title" class="card-title">{{ current_post.title }}</h5>
+    <p class="card-text" id="tour-text">{{ current_post.text }}</p>
+    <p class="text-primary" id="tour-price">{{ current_post.price }}</p>
 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#buyModal">
         Take Tour
     </button>
+    <button id="addFavoriteBtn" type="button" class="btn btn-primary">
+        Add to Favorites
+    </button>
+    {% if request.session.get('is_admin') %}
+        <button type="button" class="btn btn-primary bg-warning" data-bs-toggle="modal" data-bs-target="#editModal">
+          Edit Profile
+        </button>
+        <button type="button" id="deleteTour" class="btn btn-primary bg-danger" data-url="/post-details/{{current_post.id}}/delete-tour">
+            Delete
+        </button>
+    {% endif %}
+</div>
+
+<div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editModalLabel">Update Tour</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="editTitle" placeholder="title">
+        <input type="text" id="editText" placeholder="text">
+        <input type="text" id="editPrice" placeholder="price">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-url="/post-details/{{current_post.id}}/edit-tour" id="editSave" data-bs-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="modal fade" id="buyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
@@ -68,7 +99,7 @@
 
             <div class="d-flex gap-3">
               <button type="button" class="btn btn-info btn-lg flex-grow-1">
-                Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i>
+                Buy <i class="fas fa-heart ms-2"></i>
               </button>
               <button type="button" class="btn btn-secondary btn-lg flex-grow-1" data-bs-dismiss="modal">
                 Cancel <i class="fas fa-long-arrow-alt-left ms-2"></i>
@@ -80,5 +111,34 @@
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const userId = {{ user.id }};
+    const postId = {{ current_post.id }};
+    document.getElementById("addFavoriteBtn").addEventListener("click", function() {
+        $.ajax({
+            url: '/add_to_favorites/',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({
+                user_id: userId,
+                post_id: postId
+            }),
+            success: function(response) {
+                alert(response.message);
+            },
+            error: function(error) {
+                alert(error.responseJSON.detail || 'An error occurred.');
+            }
+        });
+    });
+});
+
+</script>
+<script src="/static/js/edit-tour.js"></script>
+<script src="/static/js/delete-tour.js"></script>
+
 
 {% endblock %}

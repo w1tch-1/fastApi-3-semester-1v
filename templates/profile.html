@@ -5,4 +5,23 @@
 <h1 id="user-username">{{ user.username }}</h1>
 <h1 id="user-email">{{ user.email }}</h1>
 
+<div id="favorite-posts">
+    {% if favorite_posts %}
+        {% for post in favorite_posts %}
+            <div class="card">
+                <div class="card-body">
+                    <a href="/post-details/{{ post.id }}">
+                        <img src="{{ post.image }}" class="card-img-top" alt="Post Image" style="height: 150px; object-fit: cover;">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.short_text }}</p>
+                        <p class="text-primary fw-bold">{{ post.price }}</p>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h2 class="favorite">No favorite posts found.</h2>
+    {% endif %}
+</div>
+
 {% endblock %}

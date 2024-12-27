@@ -38,7 +38,7 @@
         'async': true,
         'dataType': 'json',
         'data': {
-            'search': $('#searchText').val(),
+            'search': $('#searchText').val()
         },
         'success': function (response) {
             $('#searchResult').empty();
@@ -60,7 +60,7 @@
                     $('#searchResult').append(resultHtml);
                 });
             } else {
-                $('#searchResult').append('<p>No posts found.</p>');
+                $('#searchResult').append('<p> No posts found </p>');
             }
         }
     });
