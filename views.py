@@ -121,7 +121,9 @@ async def create_post(request: Request,
 async def post_details(request: Request, post_id: int, db: Session = Depends(get_db)):
     current_post = db.query(Post).get(post_id)
     user = db.query(User).get(request.session['user_id'])
-    return templates.TemplateResponse('post_details.html', {'request': request, 'current_post': current_post, 'user': user})
+    return templates.TemplateResponse('post_details.html', {'request': request,
+                                                            'current_post': current_post,
+                                                            'user': user})
 
 
 @app.post('/search')
@@ -132,14 +134,15 @@ async def search(search: str = Form(), db: Session = Depends(get_db)):
 
 @app.post('/add_to_favorites/')
 def add_to_favorites(request: FavoriteRequest, db: Session = Depends(get_db)):
-    favorite = db.query(Favorite).filter(Favorite.user_id == request.user_id, Favorite.post_id == request.post_id).first()
+    favorite = db.query(Favorite).filter(Favorite.user_id == request.user_id,
+                                         Favorite.post_id == request.post_id).first()
     if favorite:
-        raise HTTPException(status_code=400, detail="Post is already in favorites")
+        raise HTTPException(status_code=400, detail='Post is already in favorites')
     new_favorite = Favorite(user_id=request.user_id, post_id=request.post_id)
     db.add(new_favorite)
     db.commit()
     db.refresh(new_favorite)
-    return {"message": "Post added to favorites"}
+    return {'message': 'Post added to favorites'}
 
 
 @app.get('/profile', response_class=HTMLResponse)
@@ -147,17 +150,19 @@ def add_to_favorites(request: FavoriteRequest, db: Session = Depends(get_db)):
 async def profile(request: Request, db: Session = Depends(get_db)):
     user = db.query(User).get(request.session['user_id'])
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail='User not found')
     favorites = db.query(Favorite).filter(Favorite.user_id == user.id).all()
-    favorite_posts = [{"id": fav.post.id,
-                       "title": fav.post.title,
-                       "short_text": fav.post.short_text,
-                       "price": fav.post.price,
-                       "image": fav.post.image, }for fav in favorites]
-    return templates.TemplateResponse('profile.html', {'request': request, 'user': user, 'favorite_posts': favorite_posts})
+    favorite_posts = [{'id': fav.post.id,
+                       'title': fav.post.title,
+                       'short_text': fav.post.short_text,
+                       'price': fav.post.price,
+                       'image': fav.post.image, }for fav in favorites]
+    return templates.TemplateResponse('profile.html', {'request': request,
+                                                       'user': user,
+                                                       'favorite_posts': favorite_posts})
 
 
-@app.post('/post-details/{post_id}/edit-tour.js')
+@app.post('/post-details/{post_id}/edit-tour')
 @login_required
 async def edit_tour(request: Request,
                     post_id: int,
@@ -179,7 +184,7 @@ async def edit_tour(request: Request,
 async def delete_tour(request: Request, post_id: int, db: Session = Depends(get_db)):
     post = db.query(Post).filter(Post.id == post_id).first()
     if not post:
-        return {"error": "Post not found"}, 404
+        return {'error': 'Post not found'}, 404
 
     favorites = db.query(Favorite).filter(Favorite.post_id == post_id).all()
     for favorite in favorites:
@@ -187,4 +192,4 @@ async def delete_tour(request: Request, post_id: int, db: Session = Depends(get_
 
     db.delete(post)
     db.commit()
-    return {"success": "Post deleted"}
+    return {'success': 'Post deleted'}
