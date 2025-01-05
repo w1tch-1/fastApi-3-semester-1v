@@ -7,7 +7,7 @@
     <img src="{{ current_post.image }}" class="card-img-top" alt="Post Image">
     <h5 id="tour-title" class="card-title">{{ current_post.title }}</h5>
     <p class="card-text" id="tour-text">{{ current_post.text }}</p>
-    <p class="text-primary" id="tour-price">{{ current_post.price }}</p>
+    <p class="text-primary" id="tour-price">{{ current_post.price }}€</p>
 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#buyModal">
         Take Tour
@@ -94,12 +94,27 @@
 
             <div class="d-flex justify-content-between mb-4">
               <p class="mb-2">Total (Incl. Taxes)</p>
-              <p class="mb-2">{{ current_post.price }}</p>
+              <p class="mb-2" id="total">{{ current_post.price }}€</p>
+              <p class="mb-2">
+              </p>
+            </div>
+
+            <div class="form-outline form-white mb-4">
+              <input type="date" id="end" class="form-control form-control-lg" name="trip-end" value="2025-07-25" min="2025-01-01" max="2025-12-31" required/>
+              <label class="form-label" for="end">End Date</label>
+            </div>
+
+            <div class="form-outline form-white mb-4">
+              <input type="number" id="people" class="form-control form-control-lg" name="people" min="1" required/>
+              <label class="form-label" for="people">Number of People</label>
             </div>
 
             <div class="d-flex gap-3">
               <button type="button" class="btn btn-info btn-lg flex-grow-1">
                 Buy <i class="fas fa-heart ms-2"></i>
+              </button>
+              <button type="button" id="NumberOfPeople" data-url="/post-details/{{current_post.id}}/number-of-people" class="btn btn-info btn-lg flex-grow-1">
+                Calculate Price <i class="fas fa-heart ms-2"></i>
               </button>
               <button type="button" class="btn btn-secondary btn-lg flex-grow-1" data-bs-dismiss="modal">
                 Cancel <i class="fas fa-long-arrow-alt-left ms-2"></i>
@@ -137,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 </script>
+<script src="/static/js/number_of_people.js"></script>
 <script src="/static/js/edit-tour.js"></script>
 <script src="/static/js/delete-tour.js"></script>
 
