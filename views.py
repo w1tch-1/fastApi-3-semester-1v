@@ -196,7 +196,7 @@ async def delete_tour(request: Request, post_id: int, db: Session = Depends(get_
 
 
 @app.post('/post-details/{post_id}/number-of-people')
-async def number_of_people(post_id: int, people: int = 1, db: Session = Depends(get_db)):
+async def number_of_people(post_id: int, people: int, db: Session = Depends(get_db)):
     post = db.query(Post).filter(Post.id == post_id).first()
     price = post.price
     result = price * people
