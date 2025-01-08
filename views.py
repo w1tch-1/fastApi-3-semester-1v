@@ -183,9 +183,6 @@ async def edit_tour(request: Request,
 @login_required
 async def delete_tour(request: Request, post_id: int, db: Session = Depends(get_db)):
     post = db.query(Post).filter(Post.id == post_id).first()
-    if not post:
-        return {'error': 'Post not found'}, 404
-
     favorites = db.query(Favorite).filter(Favorite.post_id == post_id).all()
     for favorite in favorites:
         db.delete(favorite)
