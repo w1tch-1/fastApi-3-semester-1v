@@ -28,7 +28,9 @@ Windows:
 ## Запуск сервера
 1. **Переконайтесь, що середовище активоване**
 
-```source env/bin/activate  # для Linux/macOS .\env\Scripts\activate  # для Windows```
+```source env/bin/activate  # для Linux/macOS```
+
+```.\env\Scripts\activate  # для Windows```
 
 2. **Запустіть сервер через FastAPI**
 
