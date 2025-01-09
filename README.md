@@ -15,25 +15,25 @@
 2. **Створіть віртуальне середовище та активуйте його**
 Linux/macOS:
 
-```python3 -m venv env source env/bin/activate```
+   ```python3 -m venv env source env/bin/activate```
 
 Windows:
 
-```python -m venv env .\env\Scripts\activate```
+   ```python -m venv env .\env\Scripts\activate```
 
 3. **Встановіть залежності**
 
-```pip install -r requirements.txt```
+   ```pip install -r requirements.txt```
 
 ## Запуск сервера
 1. **Переконайтесь, що середовище активоване**
 
-```source env/bin/activate  # для Linux/macOS```
+   ```source env/bin/activate  # для Linux/macOS```
 
-```.\env\Scripts\activate  # для Windows```
+   ```.\env\Scripts\activate  # для Windows```
 
 2. **Запустіть сервер через FastAPI**
 
 Використайте uvicorn для запуску сервера:
 
-```uvicorn main:app --reload```
+   ```uvicorn main:app --reload```
