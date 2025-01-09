@@ -132,17 +132,17 @@ async def search(search: str = Form(), db: Session = Depends(get_db)):
     return {'result': search_post}
 
 
-@app.post('/add_to_favorites/')
-def add_to_favorites(request: FavoriteRequest, db: Session = Depends(get_db)):
+@app.post('/take_tour/')
+def take_tour(request: FavoriteRequest, db: Session = Depends(get_db)):
     favorite = db.query(Favorite).filter(Favorite.user_id == request.user_id,
                                          Favorite.post_id == request.post_id).first()
     if favorite:
-        raise HTTPException(status_code=400, detail='Post is already in favorites')
+        raise HTTPException(status_code=400, detail='Tour is already toked')
     new_favorite = Favorite(user_id=request.user_id, post_id=request.post_id)
     db.add(new_favorite)
     db.commit()
     db.refresh(new_favorite)
-    return {'message': 'Post added to favorites'}
+    return {'message': 'Tour added to favorites'}
 
 
 @app.get('/profile', response_class=HTMLResponse)
